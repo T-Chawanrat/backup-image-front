@@ -133,7 +133,7 @@ export default function Pagination({
             focus:ring-2 focus:ring-blue-400
           "
         >
-          {[25, 50, 75, 100].map((l) => (
+          {[50, 100, 150, 200].map((l) => (
             <option key={l} value={l}>
               {l}
             </option>

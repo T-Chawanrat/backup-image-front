@@ -73,9 +73,9 @@ export default function Page() {
 
   const [limit, setLimit] = useState(() => {
     if (typeof window !== "undefined") {
-      return Number(localStorage.getItem("limit")) || 100;
+      return Number(localStorage.getItem("limit")) || 200;
     }
-    return 100;
+    return 200;
   });
 
   const fetchData = useCallback(
@@ -305,7 +305,7 @@ export default function Page() {
                   {warehouses.map((w) => (
                     <label
                       key={w.id}
-                      className="flex items-center gap-2 hover:bg-gray-100 px-1 rounded cursor-pointer"
+                      className="flex items-center text-sm text-gray-800 gap-2 hover:bg-gray-100 px-1 rounded cursor-pointer"
                     >
                       <input
                         type="checkbox"
@@ -331,7 +331,7 @@ export default function Page() {
         {/* TABLE เดิมทั้งหมด */}
         <div className="bg-white rounded-xl border shadow-sm">
           <div className="overflow-auto max-h-[85vh]">
-            <table className="min-w-[900px] w-full text-xs text-gray-700">
+            <table className="min-w-[900px] w-full text-xs text-gray-800">
               <thead className="bg-gray-100 text-[11px] uppercase sticky top-0 z-10">
                 <tr>
                   <th className="px-3 py-2 text-left">Create</th>
@@ -374,7 +374,7 @@ export default function Page() {
                       {r.sign_name ? (
                         <img
                           src={`/sign/${r.sign_name}.png`}
-                          className="max-h-12 object-contain bg-white p-1 border cursor-pointer"
+                          className="w-16 h-8 object-cover rounded border cursor-pointer"
                           onClick={() =>
                             setPreview({
                               src: `/sign/${r.sign_name}.png`,
@@ -389,7 +389,7 @@ export default function Page() {
                       )}
                     </td>
 
-                    <td className="px-3 py-1.5 h-14 align-middle">
+                    <td className="px-3 py-1.5 align-middle">
                       {r.document_id ? (
                         <img
                           src={`/image/${r.document_id}.jpg`}
@@ -432,7 +432,9 @@ export default function Page() {
         >
           <img
             src={preview.src}
-            className="max-w-[90%] max-h-[90%] rounded shadow-lg"
+            className={`max-w-[90%] max-h-[90%] rounded shadow-lg ${
+              preview.type === "sign" ? "bg-white p-2" : ""
+            }`}
             onClick={(e) => e.stopPropagation()}
           />
         </div>
