@@ -35,9 +35,7 @@ const ImgWithFallback = ({ base, onPreview }: ImgWithFallbackProps) => {
   return (
     <img
       src={src}
-      width={40}
-      height={40}
-      className="rounded border cursor-pointer hover:scale-105 transition"
+      className="w-10 h-10 object-cover rounded border cursor-pointer hover:scale-105 transition"
       onClick={() => onPreview(src)}
       onError={() => {
         if (src.endsWith(".jpg")) {
@@ -414,6 +412,19 @@ export default function Page() {
           </div>
         </div>
       </div>
+
+      {preview && (
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+          onClick={() => setPreview(null)}
+        >
+          <img
+            src={preview.src}
+            className="max-w-[90%] max-h-[90%] rounded shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }
