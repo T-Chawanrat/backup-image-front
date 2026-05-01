@@ -35,7 +35,9 @@ const ImgWithFallback = ({ base, onPreview }: ImgWithFallbackProps) => {
   return (
     <img
       src={src}
-      className="w-10 h-10 object-cover rounded border cursor-pointer hover:scale-105 transition"
+      width={40}
+      height={40}
+      className="rounded border cursor-pointer hover:scale-105 transition"
       onClick={() => onPreview(src)}
       onError={() => {
         if (src.endsWith(".jpg")) {
@@ -368,11 +370,17 @@ export default function Page() {
                         : "-"}
                     </td>
 
-                    <td>
+                    <td className="px-3 py-1.5 align-middle">
                       {r.sign_name ? (
-                        <ImgWithFallback
-                          base={`/sign/${r.sign_name}`}
-                          onPreview={(src) => setPreview({ src, type: "sign" })}
+                        <img
+                          src={`/sign/${r.sign_name}.png`}
+                          className="max-h-12 object-contain bg-white p-1 border cursor-pointer"
+                          onClick={() =>
+                            setPreview({
+                              src: `/sign/${r.sign_name}.png`,
+                              type: "sign",
+                            })
+                          }
                         />
                       ) : (
                         <span className="text-red-500 text-[10px] font-semibold">
@@ -381,12 +389,16 @@ export default function Page() {
                       )}
                     </td>
 
-                    <td>
+                    <td className="px-3 py-1.5 h-14 align-middle">
                       {r.document_id ? (
-                        <ImgWithFallback
-                          base={`/image/${r.document_id}`}
-                          onPreview={(src) =>
-                            setPreview({ src, type: "image" })
+                        <img
+                          src={`/image/${r.document_id}.jpg`}
+                          className="w-12 h-12 object-cover rounded border cursor-pointer"
+                          onClick={() =>
+                            setPreview({
+                              src: `/image/${r.document_id}.jpg`,
+                              type: "image",
+                            })
                           }
                         />
                       ) : (
