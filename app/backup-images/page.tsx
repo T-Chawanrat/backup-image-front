@@ -373,7 +373,7 @@ export default function Page() {
                     <td>
                       {r.sign_name ? (
                         <ImgWithFallback
-                          base={`/uploads/sign/${r.sign_name}`}
+                          base={`/sign/${r.sign_name}`}
                           onPreview={(src) => setPreview({ src, type: "sign" })}
                         />
                       ) : (
@@ -386,7 +386,7 @@ export default function Page() {
                     <td>
                       {r.document_id ? (
                         <ImgWithFallback
-                          base={`/uploads/image/${r.document_id}`}
+                          base={`/image/${r.document_id}`}
                           onPreview={(src) =>
                             setPreview({ src, type: "image" })
                           }
