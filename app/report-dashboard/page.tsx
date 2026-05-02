@@ -25,8 +25,8 @@ export default function Dashboard() {
         setLoading(true);
 
         const [res1, res2] = await Promise.all([
-          Axios.get<Row[]>("/dashboard/status18"),
-          Axios.get<Row[]>("/dashboard/create-date"),
+          Axios.get<Row[]>("/status18"),
+          Axios.get<Row[]>("/create-date"),
         ]);
 
         setStatus18(res1.data || []);

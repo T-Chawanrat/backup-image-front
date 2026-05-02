@@ -82,7 +82,7 @@ export default function Page() {
   const fetchData = useCallback(
     async (p: number, s: string) => {
       try {
-        const res = await Axios.get("/backup-images", {
+        const res = await Axios.get("/", {
           params: {
             page: p,
             limit,
@@ -131,7 +131,7 @@ export default function Page() {
     if (status18Date) params.append("date_status18", status18Date);
 
     const base = process.env.NEXT_PUBLIC_API_URL || "";
-    const url = `${base}/backup-images/export?${params.toString()}`;
+    const url = `${base}/export?${params.toString()}`;
 
     window.open(url, "_blank");
   };
@@ -139,7 +139,7 @@ export default function Page() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await Axios.get("/backup-images", {
+        const res = await Axios.get("/", {
           params: {
             page,
             limit,
@@ -181,7 +181,7 @@ export default function Page() {
   useEffect(() => {
     const loadWarehouses = async () => {
       try {
-        const res = await Axios.get("/backup-images/warehouses");
+        const res = await Axios.get("/warehouses");
         setWarehouses(res.data);
       } catch (err) {
         console.error("load warehouses error:", err);
