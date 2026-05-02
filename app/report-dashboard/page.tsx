@@ -216,7 +216,7 @@ export default function Dashboard() {
       {/* 🔥 TOP MENU */}
       <div className="max-w-[1600px] mx-auto mb-3 flex justify-end">
         <Link
-          href="/backup-images"
+          href="/report-backup"
           className="
       inline-flex items-center gap-2
       px-4 py-2 text-sm font-medium

@@ -1,7 +1,5 @@
-import BackupImagesPage from "./backup-images/page";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-       <BackupImagesPage />
-  );
+  redirect("/report-dashboard");
 }
