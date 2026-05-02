@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useEffect, useState, useCallback } from "react";
 import Axios from "../../lib/axios";
 import Pagination from "../../components/Pagination";
+import Link from "next/dist/client/link";
 
 type Row = {
   create_date: string;
@@ -217,115 +218,139 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gray-50 px-3 py-4 sm:px-6 lg:px-8">
       <div className="w-full">
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value.replace(/\s/g, ""))}
-            placeholder="Search receive_code / reference_no"
-            className="w-72 bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          />
+        {/* 🔥 TOOLBAR */}
+        <div className="flex items-center justify-between mb-3">
+          {/* 🔍 LEFT */}
+          <div className="flex flex-wrap items-center gap-2">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value.replace(/\s/g, ""))}
+              placeholder="Search receive_code / reference_no"
+              className="w-72 bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
 
-          <select
-            value={hasSign}
-            onChange={(e) => {
-              setPage(1);
-              setHasSign(e.target.value);
-            }}
-            className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="true">มีลายเซ็น</option>
-            <option value="false">ไม่มีลายเซ็น</option>
-          </select>
+            <select
+              value={hasSign}
+              onChange={(e) => {
+                setPage(1);
+                setHasSign(e.target.value);
+              }}
+              className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="true">มีลายเซ็น</option>
+              <option value="false">ไม่มีลายเซ็น</option>
+            </select>
 
-          <select
-            value={hasImage}
-            onChange={(e) => {
-              setPage(1);
-              setHasImage(e.target.value);
-            }}
-            className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="true">มีรูปภาพ</option>
-            <option value="false">ไม่มีรูปภาพ</option>
-          </select>
+            <select
+              value={hasImage}
+              onChange={(e) => {
+                setPage(1);
+                setHasImage(e.target.value);
+              }}
+              className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="true">มีรูปภาพ</option>
+              <option value="false">ไม่มีรูปภาพ</option>
+            </select>
 
-          <input
-            type="date"
-            value={createDate}
-            onChange={(e) => {
-              setPage(1);
-              setCreateDate(e.target.value);
-            }}
-            className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          />
+            <input
+              type="date"
+              value={createDate}
+              onChange={(e) => {
+                setPage(1);
+                setCreateDate(e.target.value);
+              }}
+              className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
 
-          <input
-            type="date"
-            value={status18Date}
-            onChange={(e) => {
-              setPage(1);
-              setStatus18Date(e.target.value);
-            }}
-            className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          />
+            <input
+              type="date"
+              value={status18Date}
+              onChange={(e) => {
+                setPage(1);
+                setStatus18Date(e.target.value);
+              }}
+              className="bg-white text-gray-800 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
 
-          {/* 🔥 ย้าย warehouse มาอยู่ตรงนี้ */}
-          <div className="relative">
-            <details className="group">
-              <summary className="list-none cursor-pointer bg-white border text-gray-800 border-gray-300 rounded-lg px-3 py-2 text-sm flex items-center gap-2">
-                Warehouse
-                <span className="text-blue-600 text-xs">
-                  {selectedWarehouses.length > 0
-                    ? `(${selectedWarehouses.length})`
-                    : ""}
-                </span>
-              </summary>
+            <div className="relative">
+              <details className="group">
+                <summary className="list-none cursor-pointer bg-white border text-gray-800 border-gray-300 rounded-lg px-3 py-2 text-sm flex items-center gap-2">
+                  Warehouse
+                  <span className="text-blue-600 text-xs">
+                    {selectedWarehouses.length > 0
+                      ? `(${selectedWarehouses.length})`
+                      : ""}
+                  </span>
+                </summary>
 
-              {/* dropdown */}
-              <div className="absolute z-20 mt-2 w-64 bg-white border rounded-lg shadow p-3">
-                <div className="flex justify-between mb-2 text-xs">
-                  <button
-                    className="text-blue-600"
-                    onClick={() =>
-                      setSelectedWarehouses(warehouses.map((w) => w.id))
-                    }
-                  >
-                    Select All
-                  </button>
-
-                  <button
-                    className="text-red-500"
-                    onClick={() => setSelectedWarehouses([])}
-                  >
-                    Clear
-                  </button>
-                </div>
-
-                <div className="max-h-40 overflow-auto flex flex-col gap-1">
-                  {warehouses.map((w) => (
-                    <label
-                      key={w.id}
-                      className="flex items-center text-sm text-gray-800 gap-2 hover:bg-gray-100 px-1 rounded cursor-pointer"
+                <div className="absolute z-20 mt-2 w-64 bg-white border rounded-lg shadow p-3">
+                  <div className="flex justify-between mb-2 text-xs">
+                    <button
+                      className="text-blue-600"
+                      onClick={() =>
+                        setSelectedWarehouses(warehouses.map((w) => w.id))
+                      }
                     >
-                      <input
-                        type="checkbox"
-                        checked={selectedWarehouses.includes(w.id)}
-                        onChange={() => toggleWarehouse(w.id)}
-                      />
-                      <span>{w.name}</span>
-                    </label>
-                  ))}
+                      Select All
+                    </button>
+
+                    <button
+                      className="text-red-500"
+                      onClick={() => setSelectedWarehouses([])}
+                    >
+                      Clear
+                    </button>
+                  </div>
+
+                  <div className="max-h-40 overflow-auto flex flex-col gap-1">
+                    {warehouses.map((w) => (
+                      <label
+                        key={w.id}
+                        className="flex items-center text-sm text-gray-800 gap-2 hover:bg-gray-100 px-1 rounded cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedWarehouses.includes(w.id)}
+                          onChange={() => toggleWarehouse(w.id)}
+                        />
+                        <span>{w.name}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </details>
+              </details>
+            </div>
+
+            <button
+              onClick={handleExport}
+              className="inline-flex items-center gap-2
+              bg-green-600 text-white
+              px-3 py-1.5 rounded-lg text-sm font-medium
+              hover:bg-green-700
+              active:scale-[0.98]
+              transition"
+            >
+              Export Excel
+            </button>
           </div>
 
-          <button
-            onClick={handleExport}
-            className="bg-green-600 text-white px-3 py-2 rounded-lg text-sm"
+          {/* 🔥 RIGHT (Dashboard ขวาสุด) */}
+          <Link
+            href="/dashboard"
+            className="
+            inline-flex items-center gap-2
+            px-3 py-1.5 text-sm font-medium
+            text-gray-600 bg-white
+            border border-gray-200
+            rounded-lg shadow-sm
+            hover:bg-gray-50 hover:border-gray-300
+            active:scale-[0.98]
+            transition
+          "
           >
-            Export Excel
-          </button>
+            ← Dashboard
+          </Link>
         </div>
 
         {/* TABLE เดิมทั้งหมด */}
